@@ -22,6 +22,12 @@ class OCRNeuralNetwork:
 
     def _sigmoid_scalar(self, z):
         return 1 / (1 + np.exp(-z))
+    
+    def relu(self, x):
+        return np.maximum(0, x)
+
+    def relu_prime(self, x):
+        return (x > 0).astype(float)
 
     def sigmoid(self, z):
         return 1 / (1 + np.exp(-z))
@@ -36,7 +42,7 @@ class OCRNeuralNetwork:
 
         y1 = np.dot(self.theta1, np.array(data['y0']).T)
         sum1 = y1 + self.input_layer_bias  # shape: (16,)
-        y1 = self.sigmoid(sum1)
+        y1 = self.relu(sum1)
 
         y2 = np.dot(self.theta2, y1)  # shape: (10,)
         y2 = y2 + self.hidden_layer_bias
@@ -46,7 +52,7 @@ class OCRNeuralNetwork:
         actual_vals[data['label']] = 1
 
         output_errors = np.array(actual_vals).reshape(-1, 1) - y2.reshape(-1, 1)
-        hidden_errors = np.multiply(np.dot(self.theta2.T, output_errors), self.sigmoid_prime(sum1).reshape(-1, 1))
+        hidden_errors = np.multiply(np.dot(self.theta2.T, output_errors), self.relu_prime(sum1).reshape(-1, 1))
 
         self.theta1 += self.LEARNING_RATE * np.dot(hidden_errors, np.array(data['y0']).reshape(1, -1))
         self.theta2 += self.LEARNING_RATE * np.dot(output_errors, y1.reshape(1, -1))
@@ -57,7 +63,7 @@ class OCRNeuralNetwork:
     def predict(self, test):
         y1 = np.dot(self.theta1, np.array(test).T)
         y1 = y1 + np.array(self.input_layer_bias)
-        y1 = self.sigmoid(y1)
+        y1 = self.relu(y1)
         y2 = np.dot(self.theta2, y1)
         y2 = y2 + np.array(self.hidden_layer_bias)
         y2 = self.sigmoid(y2)
