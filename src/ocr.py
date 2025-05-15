@@ -8,10 +8,13 @@ class OCRNeuralNetwork:
 
     def __init__(self, num_hidden_nodes, data_matrix, data_labels, train_indices, use_file=True):
         self._use_file = use_file
-        self.theta1 = self._rand_initialize_weights(400, num_hidden_nodes)
-        self.theta2 = self._rand_initialize_weights(num_hidden_nodes, 10)
-        self.input_layer_bias = self._rand_initialize_weights(1, num_hidden_nodes)
-        self.hidden_layer_bias = self._rand_initialize_weights(1, 10)
+        if self._use_file and os.path.exists(OCRNeuralNetwork.NN_FILE_PATH):
+            self._load()
+        else: 
+            self.theta1 = self._rand_initialize_weights(400, num_hidden_nodes)
+            self.theta2 = self._rand_initialize_weights(num_hidden_nodes, 10)
+            self.input_layer_bias = self._rand_initialize_weights(1, num_hidden_nodes)
+            self.hidden_layer_bias = self._rand_initialize_weights(1, 10)
         
 
     def _rand_initialize_weights(self, size_in, size_out):

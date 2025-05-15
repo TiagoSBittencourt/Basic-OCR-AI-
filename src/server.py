@@ -27,8 +27,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path if self.path != "/" else "/ocr.html"
-        filepath = path.lstrip("/")
-
+        filepath = os.path.join(os.path.dirname(__file__), path.lstrip("/"))
+        
         if os.path.isfile(filepath):
             ext = os.path.splitext(filepath)[1]
             mime_type = self.MIME_TYPES.get(ext, "application/octet-stream")
