@@ -35,6 +35,10 @@ class OCRNeuralNetwork:
     def sigmoid_prime(self, z):
         sig = self.sigmoid(z)
         return sig * (1 - sig)
+    
+    def softmax(self, z):
+        exp_z = np.exp(z - np.max(z))  
+        return exp_z / np.sum(exp_z)
 
     def train_on_instance(self, data):
         self.input_layer_bias = self.input_layer_bias.flatten()
@@ -46,7 +50,7 @@ class OCRNeuralNetwork:
 
         y2 = np.dot(self.theta2, y1)  # shape: (10,)
         y2 = y2 + self.hidden_layer_bias
-        y2 = self.sigmoid(y2)
+        y2 = self.softmax(y2)
 
         actual_vals = [0] * 10
         actual_vals[data['label']] = 1
@@ -66,9 +70,8 @@ class OCRNeuralNetwork:
         y1 = self.relu(y1)
         y2 = np.dot(self.theta2, y1)
         y2 = y2 + np.array(self.hidden_layer_bias)
-        y2 = self.sigmoid(y2)
-        results = y2.T.tolist()
-        return results.index(max(results))
+        y2 = self.softmax(y2)
+        return int(np.argmax(y2))
 
     def save(self):
         if not self._use_file:
