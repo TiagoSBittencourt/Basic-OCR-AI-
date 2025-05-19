@@ -54,3 +54,6 @@ dist/
 *.tmp
 *.swp
 *.swo
+
+# Generate parameters file
+src/param_generator.py

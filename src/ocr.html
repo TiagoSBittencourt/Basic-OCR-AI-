@@ -1,17 +1,19 @@
-<html>
+<html lang="pt-BR">
 <head>
-    <!--<link rel="stylesheet" type="text/css" href="ocr.css">-->
+    <meta charset="UTF-8" />
+    <title>OCR Demo</title>
+    <link rel="stylesheet" href="ocr.css" />
 </head>
 <body onload="ocrDemo.onLoadFunction()">
-    <div id="main-container" style="text-align: center;">
+    <div class="main-container">
         <h1>OCR Demo</h1>
-        <canvas id="canvas" width="200" height="200"></canvas>
+        <canvas id="canvas" class="canvas" width="196" height="196"></canvas>
         <form name="input">
-            <p>Digit: <input id="digit" type="text"> </p>
-            <input type="button" value="Train" onclick="ocrDemo.train()">
-            <input type="button" value="Test" onclick="ocrDemo.test()">
-            <input type="button" value="Reset" onclick="ocrDemo.resetCanvas();"/>
-        </form> 
+            <p>Digit: <input id="digit" class="input-digit" type="text" maxlength="1"></p>
+            <input type="button" class="btn" value="Train" onclick="ocrDemo.train()">
+            <input type="button" class="btn" value="Test" onclick="ocrDemo.test()">
+            <input type="button" class="btn" value="Reset" onclick="ocrDemo.resetCanvas()">
+        </form>
     </div>
     <script src="ocr.js"></script>
 </body>

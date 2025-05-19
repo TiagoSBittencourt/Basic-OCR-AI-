@@ -2,9 +2,9 @@ var ocrDemo = {
     HOST: "http://localhost",
     PORT: "8080",
     
-    CANVAS_WIDTH: 200,
-    TRANSLATED_WIDTH: 20,
-    PIXEL_WIDTH: 10, // TRANSLATED_WIDTH = CANVAS_WIDTH / PIXEL_WIDTH
+    CANVAS_WIDTH: 196,
+    TRANSLATED_WIDTH: 28,
+    PIXEL_WIDTH: 7, // TRANSLATED_WIDTH = CANVAS_WIDTH / PIXEL_WIDTH
 
     onLoadFunction: function () {
         const canvas = document.getElementById("canvas");
