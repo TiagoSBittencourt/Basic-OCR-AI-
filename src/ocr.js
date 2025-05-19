@@ -75,14 +75,23 @@ var ocrDemo = {
         var xPixel = Math.floor(x / this.PIXEL_WIDTH);
         var yPixel = Math.floor(y / this.PIXEL_WIDTH);
         var index = yPixel * this.TRANSLATED_WIDTH + xPixel;
-        if (index >= 0 && index < this.data.length) {
-            this.data[index] = 1;
-        }
 
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(xPixel * this.PIXEL_WIDTH, yPixel * this.PIXEL_WIDTH, 
-            this.PIXEL_WIDTH, this.PIXEL_WIDTH);
+        if (index >= 0 && index < this.data.length) {
+            // Accumulate intensity (max 1)
+            this.data[index] = Math.min(1, this.data[index] + 0.1);
+
+            // Convert to grayscale (0 = black, 1 = white)
+            let gray = Math.floor((1 - this.data[index]) * 255);
+            ctx.fillStyle = `rgb(${gray}, ${gray}, ${gray})`;
+            ctx.fillRect(
+                xPixel * this.PIXEL_WIDTH,
+                yPixel * this.PIXEL_WIDTH,
+                this.PIXEL_WIDTH,
+                this.PIXEL_WIDTH
+            );
+        }
     },
+
 
     resetCanvas: function() {
         this.data = Array(this.TRANSLATED_WIDTH * this.TRANSLATED_WIDTH).fill(0);
