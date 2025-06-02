@@ -57,3 +57,6 @@ dist/
 
 # Generate parameters file
 src/param_generator.py
+
+# Train paramenters file
+# src/wb_training.py
