@@ -43,7 +43,7 @@ class OCRNeuralNetwork:
 
         y0 = np.array(data['y0']) 
 
-        y1 = np.dot(self.theta1, y0.T) + self.input_layer_bias
+        y1 = np.dot(y0, self.theta1.T) + self.input_layer_bias
         y1 = self.relu(y1)
 
         y2 = np.dot(self.theta2, y1) + self.hidden_layer_bias
@@ -61,7 +61,7 @@ class OCRNeuralNetwork:
         self.input_layer_bias += (self.LEARNING_RATE * hidden_errors).flatten()
 
     def predict(self, test):
-        y1 = np.dot(self.theta1, np.array(test).T) + self.input_layer_bias
+        y1 = np.dot(np.array(test), self.theta1.T) + self.input_layer_bias
         y1 = self.relu(y1)
         y2 = np.dot(self.theta2, y1) + self.hidden_layer_bias
         y2 = self.softmax(y2)
@@ -85,7 +85,7 @@ class OCRNeuralNetwork:
             return
         with open(OCRNeuralNetwork.NN_FILE_PATH) as nnFile:
             nn = json.load(nnFile)
-        self.theta1 = np.array(nn['theta1'])
-        self.theta2 = np.array(nn['theta2'])
+        self.theta1 = np.array(nn['theta1']).T
+        self.theta2 = np.array(nn['theta2']).T
         self.input_layer_bias = np.array(nn['b1'])
         self.hidden_layer_bias = np.array(nn['b2'])
